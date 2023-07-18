@@ -1,10 +1,13 @@
 package com.ssi.devicemonitor;
 
 import com.ssi.devicemonitor.controller.DeviceMonitorController;
+
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class DeviceMonitorApp extends Application {
 
@@ -17,6 +20,13 @@ public class DeviceMonitorApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Device Monitor");
         primaryStage.show();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent arg0) {
+				System.exit(0);				
+			}
+		});
     }
 
     public static void main(String[] args) {
