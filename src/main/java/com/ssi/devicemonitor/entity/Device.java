@@ -1,8 +1,5 @@
 package com.ssi.devicemonitor.entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public abstract class Device {
 	
     private String name;

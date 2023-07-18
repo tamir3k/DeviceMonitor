@@ -1,5 +1,8 @@
-	package com.ssi.devicemonitor.controller;
+package com.ssi.devicemonitor.controller;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,7 +30,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-
 public class DeviceMonitorController {
     @FXML
     private ListView<Device> deviceListView;
@@ -47,12 +49,7 @@ public class DeviceMonitorController {
     @FXML
     private TableView<Device> deviceTableView; // New TableView
 
-    @FXML
-    private TableColumn<Device, String> nameColumn; // New TableColumn
-
-    @FXML
-    private TableColumn<Device, String> statusColumn; // New TableColumn
-
+    
     @FXML
     private CheckBox showPropertiesCheckbox;
     
@@ -83,6 +80,8 @@ public class DeviceMonitorController {
             Device selectedDevice = deviceListView.getSelectionModel().getSelectedItem();
             if (selectedDevice != null) {
                 deviceMonitor.removeDevice(selectedDevice);
+                deviceListView.getSelectionModel().clearSelection();
+
             }
             refreshListView();
         });
@@ -90,15 +89,11 @@ public class DeviceMonitorController {
         contextMenu.getItems().addAll(removeItem);
         deviceListView.setContextMenu(contextMenu);
 
+        
         // Set up the TableView columns
-
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         deviceTableView.setVisible(false);
         deviceTableView.setManaged(false);
-
-//        
     }
 
     @FXML
@@ -169,6 +164,7 @@ public class DeviceMonitorController {
         Device selectedDevice = deviceListView.getSelectionModel().getSelectedItem();
         if (selectedDevice != null) {
             deviceMonitor.removeDevice(selectedDevice);
+            deviceListView.getSelectionModel().clearSelection();
             refreshListView();
         }
     }
@@ -205,5 +201,50 @@ public class DeviceMonitorController {
 		this.lastUpdatedTime = lastUpdatedTime;
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@FXML
+	private void saveDevice() {
+	    Device selectedDevice = deviceListView.getSelectionModel().getSelectedItem();
+	    if (selectedDevice != null) {
+	        StringBuilder deviceData = new StringBuilder();
+	        deviceData.append(selectedDevice.getDeviceType()).append(";")
+	                 .append(selectedDevice.getName()).append(";")
+	                 .append(selectedDevice.getStatus()).append(";")
+	                 .append(selectedDevice.getManufacturer()).append(";")
+	                 .append(selectedDevice.getVersion()).append(";")
+	                 ;
+
+	        if (selectedDevice instanceof HardwareDevice) {
+	            HardwareDevice hardwareDevice = (HardwareDevice) selectedDevice;
+	            deviceData.append(hardwareDevice.getManufacturer()).append(";")
+	                     .append(hardwareDevice.getLocation()).append(";");
+	        } else if (selectedDevice instanceof SoftwareDevice) {
+	            SoftwareDevice softwareDevice = (SoftwareDevice) selectedDevice;
+	            deviceData.append(softwareDevice.getInstallationDate()).append(";");
+	        }
+	        
+	        String filePath = System.getProperty("user.dir") + "/target/devices.txt";
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+	            writer.write(deviceData.toString());
+	            writer.newLine();
+	            writer.flush();
+	            showAlert("Device Saved", "The device has been saved successfully.");
+	        } catch (IOException e) {
+	            showAlert("Error", "An error occurred while saving the device.");
+	            e.printStackTrace();
+	        }
+	    } else {
+	        showAlert("No Device Selected", "Please select a device to save.");
+	    }
+	}
+
+	
+	private void showAlert(String title, String content) {
+	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	    alert.setTitle(title);
+	    alert.setHeaderText(null);
+	    alert.setContentText(content);
+	    alert.showAndWait();
 	}
 }
