@@ -7,7 +7,7 @@ public class SoftwareDevice extends Device {
 	Date installationDate;
    
 	public SoftwareDevice(String name) {
-        super(name,"Software");
+        super(name,DeviceType.SOFTWARE);
     }
 
 	public Date getInstallationDate() {

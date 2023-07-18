@@ -2,20 +2,38 @@ package com.ssi.devicemonitor.entity;
 
 public abstract class Device {
 	
+	
     private String name;
     private String status;
     
     //general device fields
     private String manufacturer;
-    private String deviceType;
+    private DeviceType deviceType;
     private String version;
+    
+    
+    public enum DeviceType {
+        HARDWARE("Hardware"),
+        SOFTWARE("Software");
+
+        private final String displayName;
+
+        DeviceType(String displayName) {
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
+    }
     
     public Device(String name) {
         this.name = name;
         this.status = "Offline"; // Set initial status to Offline
     }
 
-    public Device(String name,String type) {
+    public Device(String name,DeviceType type) {
     	this.name = name;
     	this.deviceType = type;
     	this.status = "Offline"; // Set initial status to Offline
@@ -37,12 +55,12 @@ public abstract class Device {
 	}
 
 
-	public String getDeviceType() {
+	public DeviceType getDeviceType() {
 		return deviceType;
 	}
 
 
-	public void setDeviceType(String deviceType) {
+	public void setDeviceType(DeviceType deviceType) {
 		this.deviceType = deviceType;
 	}
 

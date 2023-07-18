@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.TimerTask;
 
 import com.ssi.devicemonitor.entity.Device;
+import com.ssi.devicemonitor.entity.Device.DeviceType;
 import com.ssi.devicemonitor.entity.DeviceMonitor;
 import com.ssi.devicemonitor.entity.HardwareDevice;
 import com.ssi.devicemonitor.entity.SoftwareDevice;
@@ -114,11 +115,11 @@ public class DeviceMonitorController {
 
     @FXML
     private void addHardwareDevice() {
-    	addDevice("Hardware");
+    	addDevice(DeviceType.HARDWARE);
     }
     @FXML
     private void addSoftwareDevice() {
-    	addDevice("Software");
+    	addDevice(DeviceType.SOFTWARE);
     }
     
     @FXML
@@ -134,7 +135,7 @@ public class DeviceMonitorController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Last/next Updated Time");
         alert.setHeaderText(null);
-        alert.setContentText("Last Updated Time: " + formattedTime +" \nNext Updated Time: " + next);
+        alert.setContentText("Last Updated Time: " + formattedTime +" \nNext Update Time: " + next);
         alert.showAndWait();
     }
     
@@ -144,11 +145,11 @@ public class DeviceMonitorController {
         });
     }
     
-    private void addDevice(String deviceType) {
+    private void addDevice(DeviceType deviceType) {
         String deviceName = deviceNameTextField.getText();
         Device newDevice = null;
 	
-        if (deviceType.equals("Hardware")) {
+        if (deviceType.equals(DeviceType.HARDWARE)) {
             newDevice = new HardwareDevice(deviceName);
         } else {
              //Create a SoftwareDevice 

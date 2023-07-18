@@ -13,7 +13,7 @@
         <TextField fx:id="deviceNameTextField" layoutX="277.0" layoutY="46.0" prefWidth="222.0" />
         <Button fx:id="addHardwareDeviceButton" layoutX="277.0" layoutY="84.0" mnemonicParsing="false" onAction="#addHardwareDevice" text="Add Hardware Device" />
         <Button fx:id="addSoftwareDeviceButton" layoutX="277.0" layoutY="122.0" mnemonicParsing="false" onAction="#addSoftwareDevice" text="Add Software Device" />
-        <Button fx:id="removeDeviceButton" layoutX="277.0" layoutY="160.0" mnemonicParsing="false" onAction="#removeDevice" text="Remove Device" />
+        <Button fx:id="removeDeviceButton" layoutX="277.0" layoutY="160.0" mnemonicParsing="false" onAction="#removeDevice" text="Remove Selected Device" />
         <Button fx:id="updateTimeButton" layoutX="277.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateTime" text="Update Time" />
         <Button fx:id="saveButton" layoutX="416.0" layoutY="198.0" mnemonicParsing="false" onAction="#saveDevice" text="Save Device" />
         <TableView fx:id="deviceTableView" layoutX="277.0" layoutY="236.0" prefHeight="106.0" prefWidth="222.0">

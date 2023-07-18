@@ -6,7 +6,7 @@ public class HardwareDevice extends Device {
     private String macAddress;
     
 	public HardwareDevice(String name) {
-        super(name,"Hardware");
+        super(name,DeviceType.HARDWARE);
     }
     
     public String getLocation() {
