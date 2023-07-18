@@ -15,7 +15,7 @@ public class DeviceMonitor {
     private List<Device> devices;
     private Timer statusUpdateTimer;
     private LocalDateTime lastUpdatedTime;
-	public static final long REFRESH_TIME = 3000;
+	public static final long REFRESH_TIME = 2000;
 
     public DeviceMonitor(DeviceMonitorController deviceMonitorController) {
         devices = new ArrayList<>();

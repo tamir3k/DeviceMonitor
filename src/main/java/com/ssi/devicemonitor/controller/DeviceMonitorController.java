@@ -26,10 +26,9 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Tooltip;
 
 public class DeviceMonitorController {
     @FXML
@@ -182,9 +181,15 @@ public class DeviceMonitorController {
             if (device == null || empty) {
                 setText(null);
                 setGraphic(null);
+                setTooltip(null); // Clear the tooltip
                 setStyle(""); // Reset the cell style
             } else {
                 setText("(" + device.getDeviceType() + ") " + device.getName() + " - " + device.getStatus());
+                // Set the tooltip for the device
+                Tooltip tooltip = new Tooltip();
+                tooltip.setText("Device Type: " + device.getDeviceType().toString() + "\nStatus: " + device.getStatus());
+                tooltip.setShowDelay(new javafx.util.Duration(100)); // Set the show delay to 100 milliseconds
+                setTooltip(tooltip);
 
                 // Set the cell style based on the device status
                 if (device.getStatus().equals("Online")) {
